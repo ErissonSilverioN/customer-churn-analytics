@@ -1,0 +1,55 @@
+version: '3.8'
+
+services:
+  # MongoDB Database
+  mongodb:
+    image: mongo:7.0
+    container_name: churn_mongodb
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_DATABASE: churn_analytics
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - churn_network
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongosh localhost:27017/test --quiet
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Django Application
+  web:
+    build: .
+    container_name: churn_api
+    restart: unless-stopped
+    command: gunicorn --bind 0.0.0.0:8000 --workers 4 --timeout 120 churn_api.wsgi:application
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    environment:
+      - DEBUG=True
+      - MONGO_HOST=mongodb
+      - MONGO_PORT=27017
+      - MONGO_DB_NAME=churn_analytics
+    depends_on:
+      mongodb:
+        condition: service_healthy
+    networks:
+      - churn_network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/api/analytics/churn-rate/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+volumes:
+  mongodb_data:
+    driver: local
+
+networks:
+  churn_network:
+    driver: bridge

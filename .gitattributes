@@ -1,0 +1,20 @@
+# Git attributes for proper language detection
+*.py linguist-language=Python
+*.js linguist-language=JavaScript
+*.html linguist-language=HTML
+*.css linguist-language=CSS
+*.md linguist-documentation
+
+# Treat joblib files as binary
+*.joblib binary
+*.pkl binary
+
+# Normalize line endings
+* text=auto
+*.py text eol=lf
+*.js text eol=lf
+*.html text eol=lf
+*.css text eol=lf
+*.md text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
