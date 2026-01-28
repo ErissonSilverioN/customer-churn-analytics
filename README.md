@@ -7,7 +7,7 @@
 
 A production-grade customer churn prediction system built with **Django REST Framework**, **MongoDB**, and **modern JavaScript**. This system processes **500K+ customer records** and provides real-time churn predictions with **87% accuracy**.
 
-![Dashboard Preview](screenshots/dashboard_preview_1769556517562.png)
+![Dashboard Preview](screenshots/dashboard_full.png)
 
 ---
 
@@ -90,7 +90,7 @@ Then open `frontend/index.html` in your browser.
 - **Interactive Charts**: Dual-axis visualizations with Chart.js
 
 ### Churn Prediction Engine
-![Prediction Result](screenshots/prediction_result_1769556547143.png)
+![Prediction Result](screenshots/prediction_result.png)
 
 - **Single Predictions**: Instant risk assessment for individual customers
 - **Batch Processing**: Handle 10K+ predictions in under 30 seconds
